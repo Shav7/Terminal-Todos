@@ -25,7 +25,7 @@ body {
 
 .progress-bar {
     height: 30px;
-    border: 2px solid var(--terminal-green);
+    border: 1px solid var(--terminal-green);
     margin-bottom: 30px;
     position: relative;
 }
