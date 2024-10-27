@@ -44,7 +44,7 @@ body {
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
-    color: var(--terminal-black);
+    color: #ffffff;
     font-weight: bold;
     z-index: 2;
     text-shadow: 0 0 2px var(--terminal-green);
