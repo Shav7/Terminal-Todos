@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="terminal">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+            <div class="progress-text" id="progress-text">0% COMPLETE</div>
+        </div>
+
+        <div class="task-input">
+            <span class="prompt">&gt;</span>
+            <form id="task-form" onsubmit="return false;">
+                <input type="text" id="task-input" placeholder="ADD TASK" autocomplete="off">
+            </form>
+        </div>
+
+        <div class="task-list" id="task-list">
+            {% for task in tasks %}
+            <div class="task {% if task.completed %}completed{% endif %}" data-id="{{ task.id }}">
+                <span class="task-content">{{ task.content }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="timer" id="timer">0:00</div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+:root {
+    --terminal-green: #00ff00;
+    --terminal-black: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', monospace;
+}
+
+body {
+    background-color: var(--terminal-black);
+    color: var(--terminal-green);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.terminal {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.progress-bar {
+    height: 30px;
+    border: 2px solid var(--terminal-green);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background-color: var(--terminal-green);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--terminal-green);
+    font-weight: bold;
+}
+
+.task-input {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    color: var(--terminal-green);
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#task-input {
+    background: transparent;
+    border: none;
+    color: var(--terminal-green);
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+}
+
+.task-list {
+    margin-bottom: 20px;
+}
+
+.task {
+    padding: 10px 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.task:hover {
+    opacity: 0.8;
+}
+
+.task.completed .task-content {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.timer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+}
+
+@media (max-width: 600px) {
+    .terminal {
+        padding: 10px;
+    }
+    
+    #task-input {
+        font-size: 14px;
+    }
+    
+    .timer {
+        font-size: 18px;
+    }
+}
