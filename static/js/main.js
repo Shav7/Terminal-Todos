@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const progress = document.getElementById('progress');
     const progressText = document.getElementById('progress-text');
     const timer = document.getElementById('timer');
+    const resetTimerButton = document.getElementById('reset-timer');
 
     let seconds = 0;
-    setInterval(updateTimer, 1000);
+    let timerInterval = setInterval(updateTimer, 1000);
 
     function updateTimer() {
         seconds++;
@@ -15,6 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const remainingSeconds = seconds % 60;
         timer.textContent = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
+
+    resetTimerButton.addEventListener('click', function() {
+        seconds = 0;
+        clearInterval(timerInterval);
+        timer.textContent = '0:00';
+        timerInterval = setInterval(updateTimer, 1000);
+    });
 
     function updateProgress() {
         const tasks = document.querySelectorAll('.task');

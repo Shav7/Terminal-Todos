@@ -86,11 +86,34 @@ body {
     opacity: 0.6;
 }
 
-.timer {
+.timer-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.timer {
     font-size: 24px;
+}
+
+.terminal-button {
+    background: transparent;
+    border: 1px solid var(--terminal-green);
+    color: var(--terminal-green);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.terminal-button:hover {
+    background-color: var(--terminal-green);
+    color: var(--terminal-black);
 }
 
 @media (max-width: 600px) {
@@ -104,5 +127,10 @@ body {
     
     .timer {
         font-size: 18px;
+    }
+
+    .terminal-button {
+        font-size: 12px;
+        padding: 6px 12px;
     }
 }
