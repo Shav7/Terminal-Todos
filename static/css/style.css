@@ -112,11 +112,28 @@ body {
     font-size: 14px;
     transition: all 0.3s ease;
     order: 1;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .terminal-button:hover {
     background-color: var(--terminal-green);
     color: var(--terminal-black);
+}
+
+.error-container {
+    text-align: center;
+    padding: 40px;
+}
+
+.error-container h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.error-container p {
+    margin-bottom: 30px;
+    font-size: 18px;
 }
 
 @media (max-width: 600px) {

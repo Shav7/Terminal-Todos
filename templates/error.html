@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Terminal Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="terminal">
+        <div class="error-container">
+            <h1>ERROR</h1>
+            <p>{{ error }}</p>
+            <a href="{{ url_for('index') }}" class="terminal-button">Return to Home</a>
+        </div>
+    </div>
+</body>
+</html>
