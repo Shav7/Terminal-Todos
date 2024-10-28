@@ -15,6 +15,10 @@ author = "agent"
 task = "workflow.run"
 args = "Flask Todo App"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Production Server"
+
 [[workflows.workflow]]
 name = "Flask Todo App"
 author = "agent"
@@ -27,8 +31,26 @@ task = "shell.exec"
 args = "python main.py"
 waitForPort = 5000
 
+[[workflows.workflow]]
+name = "Production Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "gunicorn 'app:app' --bind '0.0.0.0:5000' --workers 4 --log-level info --timeout 120"
+waitForPort = 5000
+
 [deployment]
-run = ["sh", "-c", "python main.py"]
+deploymentTarget = "cloudrun"
+build = ["sh", "-c", "task-master"]
+run = ["sh", "-c", "task master"]
+
+[[ports]]
+localPort = 80
+externalPort = 3000
 
 [[ports]]
 localPort = 5000

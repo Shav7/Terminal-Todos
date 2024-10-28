@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const taskForm = document.querySelector('#task-form');
-    const taskInput = document.querySelector('#task-input');
-    const taskList = document.querySelector('#task-list');
-    const progress = document.querySelector('#progress');
-    const progressText = document.querySelector('#progress-text');
-    const timer = document.querySelector('#timer');
-    const resetTimerButton = document.querySelector('#reset-timer');
+    const taskForm = document.getElementById('task-form');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
+    const progress = document.getElementById('progress');
+    const progressText = document.getElementById('progress-text');
+    const timer = document.getElementById('timer');
+    const resetTimerButton = document.getElementById('reset-timer');
 
-    // Only initialize timer functionality if timer elements exist
+    // Timer functionality
     if (timer && resetTimerButton) {
         let seconds = 0;
         let timerInterval = setInterval(updateTimer, 1000);
@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Progress bar functionality
     function updateProgress() {
+        if (!progress || !progressText) return;
+        
         const tasks = document.querySelectorAll('.task');
         const completedTasks = document.querySelectorAll('.task.completed');
         const percentage = tasks.length ? Math.round((completedTasks.length / tasks.length) * 100) : 0;
@@ -36,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
         progressText.textContent = `${percentage}% COMPLETE`;
     }
 
-    if (taskForm) {
+    // Task management functionality
+    if (taskForm && taskInput && taskList) {
         taskForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const content = taskInput.value.trim();
@@ -63,21 +67,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error adding task:', error);
             }
         });
-    }
 
-    function createTaskElement(task) {
-        const div = document.createElement('div');
-        div.className = `task ${task.completed ? 'completed' : ''}`;
-        div.dataset.id = task.id;
-        
-        const span = document.createElement('span');
-        span.className = 'task-content';
-        span.textContent = task.content;
-        
-        div.appendChild(span);
-        
-        div.addEventListener('click', toggleTask);
-        return div;
+        // Add click handlers to existing tasks
+        const existingTasks = document.querySelectorAll('.task');
+        if (existingTasks) {
+            existingTasks.forEach(task => {
+                task.addEventListener('click', toggleTask);
+            });
+        }
     }
 
     async function toggleTask() {
@@ -98,10 +95,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Add click handlers to existing tasks
-    document.querySelectorAll('.task').forEach(task => {
-        task.addEventListener('click', toggleTask);
-    });
+    function createTaskElement(task) {
+        const div = document.createElement('div');
+        div.className = `task ${task.completed ? 'completed' : ''}`;
+        div.dataset.id = task.id;
+        
+        const span = document.createElement('span');
+        span.className = 'task-content';
+        span.textContent = task.content;
+        
+        div.appendChild(span);
+        div.addEventListener('click', toggleTask);
+        
+        return div;
+    }
 
     // Initial progress update
     updateProgress();
