@@ -1,28 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const taskForm = document.getElementById('task-form');
-    const taskInput = document.getElementById('task-input');
-    const taskList = document.getElementById('task-list');
-    const progress = document.getElementById('progress');
-    const progressText = document.getElementById('progress-text');
-    const timer = document.getElementById('timer');
-    const resetTimerButton = document.getElementById('reset-timer');
+    const taskForm = document.querySelector('#task-form');
+    const taskInput = document.querySelector('#task-input');
+    const taskList = document.querySelector('#task-list');
+    const progress = document.querySelector('#progress');
+    const progressText = document.querySelector('#progress-text');
+    const timer = document.querySelector('#timer');
+    const resetTimerButton = document.querySelector('#reset-timer');
 
-    let seconds = 0;
-    let timerInterval = setInterval(updateTimer, 1000);
+    // Only initialize timer functionality if timer elements exist
+    if (timer && resetTimerButton) {
+        let seconds = 0;
+        let timerInterval = setInterval(updateTimer, 1000);
 
-    function updateTimer() {
-        seconds++;
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        timer.textContent = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        function updateTimer() {
+            seconds++;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            timer.textContent = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        resetTimerButton.addEventListener('click', function() {
+            seconds = 0;
+            clearInterval(timerInterval);
+            timer.textContent = '0:00';
+            timerInterval = setInterval(updateTimer, 1000);
+        });
     }
-
-    resetTimerButton.addEventListener('click', function() {
-        seconds = 0;
-        clearInterval(timerInterval);
-        timer.textContent = '0:00';
-        timerInterval = setInterval(updateTimer, 1000);
-    });
 
     function updateProgress() {
         const tasks = document.querySelectorAll('.task');
@@ -33,32 +36,34 @@ document.addEventListener('DOMContentLoaded', function() {
         progressText.textContent = `${percentage}% COMPLETE`;
     }
 
-    taskForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const content = taskInput.value.trim();
-        
-        if (!content) return;
-
-        const formData = new FormData();
-        formData.append('content', content);
-
-        try {
-            const response = await fetch('/tasks', {
-                method: 'POST',
-                body: formData
-            });
+    if (taskForm) {
+        taskForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const content = taskInput.value.trim();
             
-            if (response.ok) {
-                const task = await response.json();
-                const taskElement = createTaskElement(task);
-                taskList.insertBefore(taskElement, taskList.firstChild);
-                taskInput.value = '';
-                updateProgress();
+            if (!content) return;
+
+            const formData = new FormData();
+            formData.append('content', content);
+
+            try {
+                const response = await fetch('/tasks', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const task = await response.json();
+                    const taskElement = createTaskElement(task);
+                    taskList.insertBefore(taskElement, taskList.firstChild);
+                    taskInput.value = '';
+                    updateProgress();
+                }
+            } catch (error) {
+                console.error('Error adding task:', error);
             }
-        } catch (error) {
-            console.error('Error adding task:', error);
-        }
-    });
+        });
+    }
 
     function createTaskElement(task) {
         const div = document.createElement('div');
