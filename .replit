@@ -40,7 +40,7 @@ agentRequireRestartOnSave = false
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "gunicorn 'app:app' --bind '0.0.0.0:5000' --workers 4 --log-level info --timeout 120"
+args = "gunicorn app:app --bind 0.0.0.0:5000 --workers 1 --log-level info --timeout 120"
 waitForPort = 5000
 
 [deployment]

@@ -49,8 +49,13 @@ def index():
 def add_task():
     content = request.form.get('content')
     if content:
-        task = models.Task(content=content)
+        task = models.Task()
+        task.content = content
+        history = models.TaskHistory()
+        history.task_content = content
+        history.action = 'created'
         db.session.add(task)
+        db.session.add(history)
         db.session.commit()
         return jsonify(task.to_dict()), 201
     return jsonify({'error': 'Content is required'}), 400
@@ -59,8 +64,24 @@ def add_task():
 def toggle_task(task_id):
     task = models.Task.query.get_or_404(task_id)
     task.completed = not task.completed
+    history = models.TaskHistory()
+    history.task_content = task.content
+    history.action = 'completed' if task.completed else 'uncompleted'
+    db.session.add(history)
     db.session.commit()
     return jsonify(task.to_dict())
+
+@app.route('/tasks/reset', methods=['POST'])
+def reset_tasks():
+    tasks = models.Task.query.all()
+    for task in tasks:
+        history = models.TaskHistory()
+        history.task_content = task.content
+        history.action = 'reset'
+        db.session.add(history)
+    models.Task.query.delete()
+    db.session.commit()
+    return jsonify({'message': 'All tasks have been reset'})
 
 @app.errorhandler(404)
 def not_found_error(error):

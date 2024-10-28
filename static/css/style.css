@@ -21,6 +21,8 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    min-height: calc(100vh - 40px);
 }
 
 .progress-bar {
@@ -68,7 +70,7 @@ body {
 }
 
 .task-list {
-    margin-bottom: 20px;
+    margin-bottom: 80px;
 }
 
 .task {
@@ -86,15 +88,23 @@ body {
     opacity: 0.6;
 }
 
-.timer-container {
+.bottom-controls {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.timer-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 15px;
-    justify-content: flex-end;
 }
 
 .timer {
@@ -111,7 +121,6 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 14px;
     transition: all 0.3s ease;
-    order: 1;
     text-decoration: none;
     display: inline-block;
 }
@@ -156,5 +165,11 @@ body {
 
     .timer-container {
         gap: 10px;
+    }
+    
+    .bottom-controls {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
     }
 }

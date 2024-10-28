@@ -28,9 +28,12 @@
             {% endfor %}
         </div>
 
-        <div class="timer-container">
-            <button class="terminal-button" id="reset-timer">RESET</button>
-            <div class="timer" id="timer">0:00</div>
+        <div class="bottom-controls">
+            <button class="terminal-button" id="reset-tasks">RESET TASKS</button>
+            <div class="timer-container">
+                <button class="terminal-button" id="reset-timer">RESET</button>
+                <div class="timer" id="timer">0:00</div>
+            </div>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
