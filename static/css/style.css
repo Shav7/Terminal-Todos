@@ -94,10 +94,12 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 15px;
+    justify-content: flex-end;
 }
 
 .timer {
     font-size: 24px;
+    order: 2;
 }
 
 .terminal-button {
@@ -109,6 +111,7 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 14px;
     transition: all 0.3s ease;
+    order: 1;
 }
 
 .terminal-button:hover {
