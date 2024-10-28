@@ -45,8 +45,8 @@ waitForPort = 5000
 
 [deployment]
 deploymentTarget = "cloudrun"
-build = ["sh", "-c", "task-master"]
-run = ["sh", "-c", "task master"]
+build = ["sh", "-c", "pip install -r requirements.txt"]
+run = ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:5000"]
 
 [[ports]]
 localPort = 80
